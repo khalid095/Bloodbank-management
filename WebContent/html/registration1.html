@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>registration1</title>
+
+<script src="/bloodbank/js/validation.js"></script>
+<script src="/bloodbank/bootfiles/jquery-3.1.1.min.js"></script>
+<script> 
+$(document).ready(function()
+		{
+	     // alert("in fun")
+	      $("#txtuserid").blur(function(){
+	    	 var data=""
+	    	 
+	    			  var ui=this.value;
+	    			// alert(ui);
+	    			  $.get("/bloodbank/Registration",
+	    			  {
+	    				  userid:ui
+	    			  },
+	    			  function(data,status){
+	    			 
+	    				  var info=data.localeCompare("User Id Already Exists")
+                     
+                      //  alert(data+info)
+                       	 if(info==1)
+                       		 {
+                       		// alert("in if")
+                       	 
+	    				  $("#divmsg").html(data);
+	    				  $("#divmsg").show();
+                       		 }
+                       	 else
+                       		 {
+                       		 $("#divmsg").hide();
+                       		 
+                       		 }
+                       		 
+                       	 
+                       		   
+	    				  
+	    			  });
+	    		  });
+	      
+		});
+
+</script>
+<script>
+	function opentext(city) {
+
+		if (city == "others") {
+			document.getElementById("txtothers").style.display = "block";
+		} else {
+			document.getElementById("txtothers").style.display = "none";
+		}
+	}
+	function main() {
+
+		var b = true;
+		var userid = document.getElementById("txtuserid").value;
+		var userpass = document.getElementById("txtuserpass").value;
+		var name = document.getElementById("txtname").value;
+		var dob=document.getElementById("txtdate").value;
+		var bloodgroup=document.getElementById("cmbblood").value;
+		var email = document.getElementById("txtemail").value;
+		var phoneno = document.getElementById("txtdnrno").value;
+		var address = document.getElementById("txtaddress").value;
+		var city = document.getElementById("cmbcity").value;
+		var arr = document.getElementsByName("gender");
+
+		// alert(userid);
+
+		if (checkEmpty(userid) == false) {
+			//alert("userid needed");
+			document.getElementById("msg").innerHTML = "required userid";
+			b = false;
+
+		}
+		if (checkEmpty(userpass) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg1").innerHTML = "required userpass";
+			b = false;
+
+		}
+		if (checkEmpty(name) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg2").innerHTML = "required name";
+			b = false;
+
+		}
+		if (checkEmpty(dob) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg3").innerHTML = "required dob";
+			b = false;
+
+		}
+		if (checkCombo(bloodgroup) == false) {
+			//alert("p1 selectcity");
+			document.getElementById("msg4").innerHTML = "select bloodgroup";
+			b = false;
+		}
+		if (checkEmpty(email) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg5").innerHTML = "required email";
+			b = false;
+
+		}
+		if (checkEmpty(phoneno) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg6").innerHTML = "contact needed";
+			b = false;
+
+		}
+		if (checkEmpty(address) == false) {
+			//alert("userpass needed");
+			document.getElementById("msg7").innerHTML = "required address";
+			b = false;
+
+		}
+		if (checkctrl(arr) == false) {
+			//alert("select atleast one hobby");
+			document.getElementById("msg8").innerHTML = "select your gender";
+			b = false;
+		}
+
+		if (checkCombo(city) == false) {
+			//alert("p1 selectcity");
+			document.getElementById("msg9").innerHTML = "select city";
+			b = false;
+		}
+
+		return b;
+
+	}
+</script>
+</head>
+<body>
+	<div style="width: 100%;height: 85px;background-image:url('/bloodbank/imgs/b18.jpg');float:left"></div>
+
+	<div style="width: 100%;height: 915px;background-color:skyblue;float:left">
+	
+	<h1 id="fmt" style="color: black; text-align: center">USER REGISTRATION</h1>
+	
+	<div style="width: 45%;height: 80%;margin-left:370px;margin-top:20px;float:left">
+		<form method="post" action="/bloodbank/Registration1" onsubmit="return main()">
+			<table style="width: 100%; height:100%;color:grey;border:solid;margin-left:50px">
+
+				<tr>
+					<th style="color: black">User id:*</th>
+					<th><input type="text" name="txtuserid" id="txtuserid"
+						placeholder="enter your id"></th>
+				</tr>
+
+				<tr>
+					<th style="color: black">User pass:*</th>
+					<th><input type="password" name="txtuserpass" id="txtuserpass"
+						placeholder="enter your password"></th>
+				</tr>
+
+				<tr>
+					<th style="color: black">Name:*</th>
+					<th><input type="text" name="txtname" id="txtname"
+						placeholder="enter your name here"></th>
+				</tr>
+				<tr>
+					<th style="color: black">DOB:*</th>
+					<th><input type="date" name="txtdate" id="txtdate"
+						placeholder="enter your dob here"></th>
+				</tr>
+				<tr>
+					<th style="color: black">Blood group</th>
+					<th><select id="cmbblood" name="cmbblood"
+						onchange="opentext(this.value)">
+							<option value="default">select blood group</option>
+							<option value="O+">O+</option>
+							<option value="A+">A+</option>
+							<option value="B+">B+</option>
+							<option value="B-">B-</option>
+							<option value="A-">A-</option>
+							<option value="O-">O-</option>
+							<option value="AB+">AB+</option>
+							<option value="AB-">AB-</option>
+					</select></th>
+				</tr>
+				<tr>
+					<th style="color: black">Email Id:*</th>
+					<th><input type="email" name="txtemail" id="txtemail"
+						placeholder="enter your email id"></th>
+				</tr>
+				<tr>
+					<th style="color: black">phone No:*</th>
+					<th><input type="number" name="txtdnrno" id="txtdnrno"
+						placeholder="enter mobile no"></th>
+				</tr>
+
+				<tr>
+					<th style="color: black">Address:*</th>
+					<th><textarea id="txtaddress" name="txtaddress" rows="5"
+							cols="20"></textarea></th>
+				</tr>
+				<tr>
+					<th style="color: black">Gender:*</th>
+					<th style="color: black"><input type="radio" name="gender" value="male">Male
+						<input type="radio" name="gender" value="female">Female</th>
+				</tr>
+
+
+
+				<tr>
+					<th style="color: black">City</th>
+					<th><select id="cmbcity" name="cmbcity"
+						onchange="opentext(this.value)">
+							<option value="default">select city</option>
+							<option value="lucknow">Lucknow</option>
+							<option value="delhi">Delhi</option>
+							<option value="kanpur">Kanpur</option>
+							<option value="varanasi">Varanasi</option>
+							<option value="gorakhpur">Azamgarh</option>
+							<option value="others">Others</option>
+					</select></th>
+				</tr>
+				<tr>
+					<td><input type="text" id="txtothers"  name="txtothers" style="display: none"></td>
+				</tr>
+
+
+				<tr>
+					<th colspan="2" align="center"><button type="submit">submit</button></th>
+				</tr>
+<div style="width: 150px;height: 20px;margin-left:650px;display:none;float: left" id="divmsg"></div>
+			</table>
+
+		</form>
+		<h5 id="msg" style="color: black; text-align: center;"></h5>
+		<h5 id="msg1" style="color: blacke; text-align: center;"></h5>
+		<h5 id="msg2" style="color: black; text-align: center;"></h5>
+		<h5 id="msg3" style="color: black; text-align: center;"></h5>
+		<h5 id="msg4" style="color: black; text-align: center;"></h5>
+		<h5 id="msg5" style="color: black; text-align: center;"></h5>
+		<h5 id="msg6" style="color: black; text-align: center;"></h5>
+		<h5 id="msg7" style="color: black; text-align: center;"></h5>
+		<h5 id="msg8" style="color: black; text-align: center;"></h5>
+		<h5 id="msg9" style="color: black; text-align: center;"></h5>
+		
+	</div>
+
+
+</div>
+
+</body>
+</html>
